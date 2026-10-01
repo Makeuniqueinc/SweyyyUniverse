@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Swetha Universe</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05030f;--fg:#f4eefc;--mut:#b9a9d8;--pink:#ff7ad9;--vio:#9a6bff;--blue:#5ec8ff;--glass:rgba(30,18,60,.55);--bd:rgba(200,170,255,.28);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,sans-serif;overflow:hidden}
+.serif{font-family:'Cormorant Garamond',Georgia,serif}
+canvas{position:fixed;inset:0;width:100%;height:100%}
+#neb{position:fixed;inset:0;background:radial-gradient(60% 50% at 20% 25%,rgba(154,107,255,.25),transparent),radial-gradient(50% 45% at 80% 70%,rgba(255,122,217,.18),transparent),radial-gradient(40% 40% at 60% 10%,rgba(94,200,255,.15),transparent)}
+.scr{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;transition:opacity 1.4s,visibility 1.4s}
+.hide{opacity:0;visibility:hidden;pointer-events:none}
+.eyebrow{letter-spacing:.3em;font-size:clamp(10px,2.6vw,13px);color:var(--mut);max-width:30ch;line-height:1.9}
+h1{font-size:clamp(52px,16vw,128px);margin:.15em 0 0;letter-spacing:.08em;font-weight:700;background:linear-gradient(90deg,var(--blue),var(--vio),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 24px rgba(154,107,255,.6))}
+.date{font-size:clamp(20px,5vw,30px);color:var(--mut);margin-bottom:28px}
+.cd{display:flex;gap:10px}.cd div{min-width:64px;padding:10px 6px;border-radius:14px;background:var(--glass);border:1px solid var(--bd);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.cd b{display:block;font-size:clamp(22px,6vw,34px);font-weight:500;font-variant-numeric:tabular-nums}.cd span{font-size:9px;letter-spacing:.2em;color:var(--mut)}
+.btn{margin-top:34px;padding:14px 34px;border-radius:99px;border:1px solid var(--bd);background:linear-gradient(135deg,rgba(154,107,255,.5),rgba(255,122,217,.4));color:#fff;font:500 15px Inter;letter-spacing:.12em;cursor:pointer;animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 12px rgba(154,107,255,.5)}50%{box-shadow:0 0 34px rgba(255,122,217,.8)}}
+#music{position:fixed;top:calc(14px + env(safe-area-inset-top,0px));right:14px;z-index:30;width:42px;height:42px;border-radius:50%;border:1px solid var(--bd);background:var(--glass);color:#fff;font-size:17px;cursor:pointer;backdrop-filter:blur(8px)}
+#stage{position:fixed;inset:0}
+#star{position:absolute;left:50%;top:50%;width:92px;height:92px;margin:-46px;border-radius:50%;border:0;cursor:pointer;color:#fff;font:700 11px 'Cormorant Garamond',serif;letter-spacing:.12em;background:radial-gradient(circle,#fff 0,#ffd9f4 30%,var(--pink) 60%,transparent 72%);box-shadow:0 0 60px 20px rgba(255,122,217,.55),0 0 140px 50px rgba(154,107,255,.4);animation:pulse 3s infinite;color:#3a0f4d;z-index:5}
+.pl{position:absolute;left:0;top:0;width:54px;height:54px;margin:-27px;border-radius:50%;border:0;cursor:pointer;font-size:22px;display:flex;align-items:center;justify-content:center;transition:filter .3s;will-change:transform}
+.pl:hover{filter:brightness(1.4) drop-shadow(0 0 14px #fff)}
+.pl small{position:absolute;top:60px;font:400 10px Inter;color:var(--mut);white-space:nowrap;letter-spacing:.08em}
+.pl.lock{filter:grayscale(.6) brightness(.8)}.pl.done::after{content:'';position:absolute;right:2px;top:2px;width:9px;height:9px;border-radius:50%;background:#7dffb5;box-shadow:0 0 8px #7dffb5}
+#prog{position:fixed;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center;font-size:12px;letter-spacing:.2em;color:var(--mut);z-index:6}
+#card{z-index:20;background:rgba(5,3,15,.55)}
+.gl{max-width:460px;width:100%;max-height:82vh;overflow:auto;padding:30px 26px;border-radius:24px;background:var(--glass);border:1px solid var(--bd);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 0 60px rgba(154,107,255,.3)}
+.gl h2{font-size:32px;margin:0 0 14px}.gl p{line-height:1.8;color:#e6dcf7;font-weight:300;margin:.6em 0}
+.fade{opacity:0;animation:fi 1s forwards}@keyframes fi{to{opacity:1}}
+.x{margin-top:18px;background:none;border:1px solid var(--bd);color:#fff;padding:9px 22px;border-radius:99px;cursor:pointer}
+#rev{z-index:15;pointer-events:none}#rev .l{opacity:0;transition:opacity 2s;margin:8px 0}#rev .l.on{opacity:1}
+#rev .big{font-size:clamp(28px,8vw,56px);font-weight:700;background:linear-gradient(90deg,var(--blue),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+#rep{pointer-events:auto}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body>
+<div id="neb"></div><canvas id="bg"></canvas><canvas id="fx" style="z-index:25;pointer-events:none"></canvas>
+<button id="music" aria-label="Music">🔇</button>
+
+<div class="scr" id="welcome">
+ <div class="eyebrow">WELCOME TO A UNIVERSE THAT WAS MADE FOR ONE PERSON.</div>
+ <h1 class="serif">SWETHA</h1><div class="date serif">October 7, 2026</div>
+ <div class="cd" id="cd"></div>
+ <button class="btn" id="enter">ENTER THE UNIVERSE</button>
+</div>
+
+<div class="scr hide" id="galaxy" style="padding:0"><div id="stage"><button id="star" aria-label="Center star">SWETHA</button></div><div id="prog"></div></div>
+<div class="scr hide" id="card"><div class="gl"><h2 class="serif" id="ct"></h2><div id="cb"></div><button class="x" id="cx">Close</button></div></div>
+<div class="scr hide" id="rev"><div class="l serif" style="font-size:clamp(20px,5vw,32px)" id="l1">In this universe,<br>October 7 isn't just a date.</div>
+ <div class="l serif" style="font-size:clamp(20px,5vw,32px)" id="l2">It's the day my favorite star was born. ✨</div>
+ <div class="l serif big" id="l3">HAPPY BIRTHDAY SWETHA 🎂</div><button class="btn hide" id="rep">REPLAY</button></div>
+
+<script>
+// ===== MESSAGES =====
+const TARGET=new Date('2026-10-07T00:00:00+05:30').getTime();
+const PLANETS=[
+{n:'A Little Note',e:'🌙',c:'#8fb4ff',b:['Hey Swetha,','I made this little universe just for you, because an ordinary message felt too small for a day like this.','Take your time exploring it. Every planet has something I wanted you to know.']},
+{n:"Why You're Special",e:'✨',c:'#ffd27a',b:['You have a warmth that makes people feel at ease the moment you walk in.','You care deeply, and you do it without ever making a show of it.','You make ordinary days feel lighter, just by being in them.','The world is genuinely better with you in it.']},
+{n:'For Your Smile',e:'🌸',c:'#ff9ad5',b:['Your smile has a strange superpower: it makes everything around it feel okay.','Never let anything dim it for long.','If the stars ever need a reminder of how to shine, they can look at you.']},
+{n:'A Wish',e:'💫',c:'#b99aff',b:['I wish you a year full of laughter that hurts your cheeks.','I wish you big dreams that finally come true, and the courage to chase the ones that still feel far away.','I wish you peace on the hard days and people who remind you how loved you are.','May this year be your brightest one yet.']},
+{n:'October 7',e:'🌟',c:'#7fe3ff',date:1,b:[]},
+{n:'A Surprise',e:'☄️',c:'#ff8a6b',lock:1,b:['Happy Birthday, Swetha! 🎉','You found the surprise: the whole universe was built to say this to you.','May every wish you make tonight come true. Now go celebrate like the star you are. 🎂✨']},
+{n:'From Me',e:'❤️',c:'#ff6f91',b:['Swetha, thank you for being exactly who you are.','I hope today makes you feel as special as you truly are, and I hope you remember it every day after.','Happy Birthday. Keep shining. 🌟']}];
+// ===================================
+const $=id=>document.getElementById(id);
+const bg=$('bg'),g=bg.getContext('2d'),fx=$('fx'),f=fx.getContext('2d');
+let W,H,DPR=Math.min(devicePixelRatio||1,2),mode='idle',mx=0,my=0,T0=performance.now();
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function size(){W=innerWidth;H=innerHeight;for(const c of[bg,fx]){c.width=W*DPR;c.height=H*DPR}g.setTransform(DPR,0,0,DPR,0,0);f.setTransform(DPR,0,0,DPR,0,0)}
+addEventListener('resize',size);size();
+addEventListener('pointermove',e=>{mx=(e.clientX/W-.5);my=(e.clientY/H-.5)});
+const N=750,S=[];for(let i=0;i<N;i++){const z=Math.random();S.push({x:Math.random()*W,y:Math.random()*H,z,r:.4+z*1.4,p:Math.random()*6.28,tx:null,ty:null})}
+let zoom=1;
+function drawBg(t){g.clearRect(0,0,W,H);
+ for(const s of S){let x,y;
+  if(mode==='form'&&s.tx!==null){s.x+=(s.tx-s.x)*.045;s.y+=(s.ty-s.y)*.045;x=s.x;y=s.y}
+  else{if(!RM){s.y+=.06+s.z*.15;if(s.y>H)s.y=0}
+   x=W/2+(s.x-W/2)*zoom-mx*s.z*40;y=H/2+(s.y-H/2)*zoom-my*s.z*40}
+  const a=(.4+.6*Math.abs(Math.sin(t/900+s.p)))*(s.tx!==null&&mode==='form'?1:.35+s.z*.65);
+  g.fillStyle=s.tx!==null&&mode==='form'?`rgba(255,${180+s.z*60|0},240,${a})`:`rgba(220,210,255,${a})`;
+  g.beginPath();g.arc(x,y,s.r*(mode==='form'&&s.tx!==null?1.3:1),0,6.28);g.fill()}}
+// countdown
+function pad(n){return String(n).padStart(2,'0')}
+function parts(ms){ms=Math.max(0,ms);return[Math.floor(ms/864e5),Math.floor(ms/36e5)%24,Math.floor(ms/6e4)%60,Math.floor(ms/1e3)%60]}
+function tick(){const p=parts(TARGET-Date.now());$('cd').innerHTML=['DAYS','HOURS','MINUTES','SECONDS'].map((l,i)=>`<div><b>${pad(p[i])}</b><span>${l}</span></div>`).join('');
+ const un=Date.now()>=TARGET;document.querySelectorAll('.pl.lock').forEach(b=>b.classList.toggle('lock',!un));}
+setInterval(tick,1000);tick();
+// planets
+const stage=$('stage'),seen=new Set(),pls=[];
+PLANETS.forEach((p,i)=>{const b=document.createElement('button');b.className='pl'+(p.lock?' lock':'');b.innerHTML=p.e+'<small>'+p.n+'</small>';
+ b.style.background=`radial-gradient(circle at 35% 30%,#fff8,${p.c} 55%,#1a0b3a)`;b.style.boxShadow=`0 0 22px ${p.c}99`;
+ b.onclick=()=>openCard(i,b);stage.appendChild(b);pls.push({b,a:i*6.28/7,sp:.00022+(i%4)*.00006,k:.38+i*.07})});
+function layout(t){const m=Math.min(W,H),cx=W/2,cy=H/2;
+ pls.forEach(o=>{const a=o.a+t*o.sp,rx=Math.min(W*.46,m*.3+o.k*m*.55),ry=rx*.55,s=.8+.3*(Math.sin(a)+1)/2;
+  const x=cx+Math.cos(a)*rx+mx*20,y=cy+Math.sin(a)*ry+Math.cos(a)*rx*.12;
+  o.b.style.transform=`translate(${x}px,${y}px) scale(${s})`;o.b.style.zIndex=Math.sin(a)>0?7:3})}
+function openCard(i,b){const p=PLANETS[i],un=Date.now()>=TARGET;let h='';
+ if(p.lock&&!un){const q=parts(TARGET-Date.now());h=`<p style="text-align:center;font-size:42px">🔒</p><p style="text-align:center">Locked until October 7, 2026.<br><b id="mini">${q[0]}d ${q[1]}h ${q[2]}m</b></p>`}
+ else if(p.date){h=`<p class="serif fade" style="font-size:64px;text-align:center;margin:0;line-height:1">07</p><p class="serif fade" style="text-align:center;font-size:26px;animation-delay:.8s">October 2026</p><p class="fade" style="text-align:center;animation-delay:1.6s">The day the universe made someone wonderful: you.</p>`}
+ else h=p.b.map((t,k)=>`<p class="fade" style="animation-delay:${k*1.2}s">${t}</p>`).join('');
+ $('ct').textContent=p.n;$('cb').innerHTML=h;$('card').classList.remove('hide');
+ if(!(p.lock&&!un)){seen.add(i);b.classList.add('done');prog()}}
+function prog(){$('prog').textContent=seen.size+'/7 EXPLORED'}prog();
+$('cx').onclick=()=>$('card').classList.add('hide');
+// audio
+let ac,mg,on=false;
+function startAudio(){if(ac)return;ac=new (window.AudioContext||window.webkitAudioContext)();mg=ac.createGain();mg.gain.value=0;
+ const lp=ac.createBiquadFilter();lp.type='lowpass';lp.frequency.value=900;mg.connect(lp);lp.connect(ac.destination);
+ [110,164.8,220,261.6,329.6,392].forEach((fq,i)=>{const o=ac.createOscillator(),gn=ac.createGain();o.type=i%2?'sine':'triangle';o.frequency.value=fq;o.detune.value=(i-3)*4;gn.gain.value=.05;
+  const l=ac.createOscillator(),lg=ac.createGain();l.frequency.value=.08+i*.03;lg.gain.value=.025;l.connect(lg);lg.connect(gn.gain);l.start();o.connect(gn);gn.connect(mg);o.start()})}
+function setVol(v){if(ac)mg.gain.linearRampToValueAtTime(on?v:0,ac.currentTime+2)}
+$('music').onclick=()=>{startAudio();ac.resume();on=!on;$('music').textContent=on?'🔊':'🔇';setVol(.5)};
+// confetti
+let cf=[];function burst(){for(let i=0;i<160;i++)cf.push({x:W/2,y:H*.55,vx:(Math.random()-.5)*12,vy:-Math.random()*13-3,c:`hsl(${Math.random()*80+280},90%,70%)`,l:1,s:2+Math.random()*3})}
+function drawCf(){f.clearRect(0,0,W,H);cf=cf.filter(p=>p.l>0);for(const p of cf){p.x+=p.vx;p.y+=p.vy;p.vy+=.18;p.l-=.007;f.globalAlpha=Math.max(p.l,0);f.fillStyle=p.c;f.fillRect(p.x,p.y,p.s,p.s*1.6)}f.globalAlpha=1}
+// flow
+$('enter').onclick=()=>{$('welcome').classList.add('hide');$('galaxy').classList.remove('hide');mode='galaxy'};
+function reveal(){if(mode==='form')return;mode='form';$('galaxy').classList.add('hide');
+ const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');const fs=Math.min(W/4.2,170);
+ x.font=`700 ${fs}px "Cormorant Garamond",Georgia,serif`;x.textAlign='center';x.textBaseline='middle';x.fillText('SWETHA',W/2,H*.3);
+ const d=x.getImageData(0,0,W,H).data,pts=[],st=Math.max(4,Math.round(fs/22));
+ for(let yy=0;yy<H;yy+=st)for(let xx=0;xx<W;xx+=st)if(d[(yy*W+xx)*4+3]>128)pts.push([xx,yy]);
+ pts.sort(()=>Math.random()-.5);
+ // first zoom out, then rearrange
+ zoom=1;const z0=performance.now();(function zo(){const k=Math.min((performance.now()-z0)/2500,1);zoom=1-.5*k;if(k<1)requestAnimationFrame(zo)})();
+ setTimeout(()=>{S.forEach(s=>{s.x=W/2+(s.x-W/2)*zoom;s.y=H/2+(s.y-H/2)*zoom;s.tx=null});zoom=1;
+  for(let i=0;i<Math.min(pts.length,S.length);i++){S[i].tx=pts[i][0];S[i].ty=pts[i][1]}},2500);
+ $('rev').classList.remove('hide');['l1','l2','l3'].forEach(i=>$(i).classList.remove('on'));$('rep').classList.add('hide');
+ const sh=(id,ms)=>setTimeout(()=>$(id).classList.add('on'),ms);sh('l1',5500);sh('l2',9000);
+ setTimeout(()=>{$('l3').classList.add('on');burst();setTimeout(burst,900);setTimeout(burst,1800);setVol(.9);$('rep').classList.remove('hide')},13000)}
+$('star').onclick=reveal;
+$('rep').onclick=()=>{$('rev').classList.add('hide');$('rep').classList.add('hide');setVol(.5);
+ S.forEach(s=>{s.tx=Math.random()*W;s.ty=Math.random()*H});
+ setTimeout(()=>{S.forEach(s=>{s.tx=null});zoom=1;mode='galaxy';$('galaxy').classList.remove('hide')},2600)};
+(function loop(t){drawBg(t);if(mode!=='idle')layout(t);drawCf();requestAnimationFrame(loop)})(0);
+</script></body></html>
